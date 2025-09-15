@@ -19,6 +19,7 @@
 <html>
 <head>
     <title>About</title>
+    <!-- <title>{{ config('app.name') }}</title> -->
 </head>
 <body>
     <h1>Ini Halaman About</h1>

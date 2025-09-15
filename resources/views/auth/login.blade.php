@@ -1,5 +1,11 @@
 <x-guest-layout>
     <!-- Session Status -->
+     <div class="text-center mb-6">
+        <!--<img src="{{ asset('images/logo.png') }}" alt="Logo" class="mx-auto w-24 h-24">-->
+        <h2 class="text-2xl font-bold mt-4 text-indigo-700">Selamat Datang di Sistem Toko Mahasiswa</h2>
+        <p class="text-sm text-gray-600">Silakan login untuk melanjutkan</p>
+    </div>
+
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <form method="POST" action="{{ route('login') }}">

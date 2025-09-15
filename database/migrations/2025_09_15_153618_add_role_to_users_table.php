@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (Schema::hasTable('siswa')) return;
-
-    Schema::create('siswa', function (Blueprint $table) {
-        $table->id();
-        $table->string('npm');
-        $table->string('nama');
-        $table->string('jurusan');
-    });
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('role')->default('users');
+        });
 
     }
 
@@ -27,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('siswa');
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 };

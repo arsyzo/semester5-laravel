@@ -11,15 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (Schema::hasTable('siswa')) return;
-
-    Schema::create('siswa', function (Blueprint $table) {
-        $table->id();
-        $table->string('npm');
-        $table->string('nama');
-        $table->string('jurusan');
-    });
-
+    //    Schema::table('products', function (Blueprint $table) {
+    //     $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+    //     });
     }
 
     /**
@@ -27,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('siswa');
+        Schema::table('products', function (Blueprint $table) {
+            //
+        });
     }
 };

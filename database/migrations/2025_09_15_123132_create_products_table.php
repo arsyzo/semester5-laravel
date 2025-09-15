@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (Schema::hasTable('siswa')) return;
-
-    Schema::create('siswa', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
         $table->id();
-        $table->string('npm');
-        $table->string('nama');
-        $table->string('jurusan');
-    });
+        $table->string('name');
+        $table->decimal('price', 10, 2);
+        $table->text('description')->nullable();
+        $table->foreignId('category_id')->constrained()->onDelete('cascade');
+        $table->timestamps();
+        });
 
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('siswa');
+        Schema::dropIfExists('products');
     }
 };
