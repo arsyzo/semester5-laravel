@@ -28,4 +28,11 @@ class productController extends Controller
 
         return redirect('/products')->with('success', 'Produk berhasil ditambahkan!');
     }
+
+    public function index($angka)
+    {
+        $hasil = $angka + 10; // bebas, kamu bisa ganti 10 dengan angka lain
+        return view('products.result', compact('hasil'));
+    }
+
 }

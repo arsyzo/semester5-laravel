@@ -70,14 +70,40 @@ class Kernel implements KernelContract
      *
      * @deprecated
      */
-    protected $routeMiddleware = [];
+    protected $routeMiddleware = [
+        'RoleCheck' => \App\Http\Middleware\RoleCheck::class, //ini untuk middleware role, baru ditambahkan
+        'auth' => \App\Http\Middleware\Authenticate::class,
+        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
+        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
+        'can' => \Illuminate\Auth\Middleware\Authorize::class,
+        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
+        'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
+        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'role' => \App\Http\Middleware\RoleMiddleware::class, //ini untuk middleware role, baru ditambahkan pada tugas 3
+    ];
 
     /**
      * The application's middleware aliases.
      *
      * @var array<string, class-string|string>
      */
-    protected $middlewareAliases = [];
+    protected $middlewareAliases = [
+        'RoleCheck' => \App\Http\Middleware\RoleCheck::class, //ini untuk middleware role, baru ditambahkan
+            'role' => \App\Http\Middleware\RoleCheck::class, //ini untuk middleware role, baru ditambahkan
+        // 'auth' => \App\Http\Middleware\Authenticate::class,
+        // 'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        // 'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
+        // 'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
+        // 'can' => \Illuminate\Auth\Middleware\Authorize::class,
+        // 'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        // 'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
+        // 'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
+        // 'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        // 'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+    ];
 
     /**
      * All of the registered request duration handlers.

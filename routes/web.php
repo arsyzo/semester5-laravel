@@ -39,8 +39,26 @@ Route::get('/categories', function () {
     return view('categories.index', compact('categories'));
 });
 
+//role untuk middleware 
 use App\Http\Controllers\productController;
 
 Route::get('/products/create', [productController::class, 'create']);
 Route::post('/products', [productController::class, 'store']);
 
+//percobaan
+
+
+Route::get('dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth','RoleCheck:admin'])->name('dashboard');  
+
+Route::get('/rahasia', function (): string{
+    return 'ini path rahasia';
+})->middleware(['auth', 'RoleCheck:admin'])->name('rahasia');
+
+require __DIR__.'/auth.php';
+
+// use App\Http\Controllers\ProductController;
+
+Route::get('/angka/{angka}', [ProductController::class, 'index'])
+    ->middleware('role:admin,owner');
