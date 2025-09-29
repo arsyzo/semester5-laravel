@@ -62,3 +62,40 @@ require __DIR__.'/auth.php';
 
 Route::get('/angka/{angka}', [ProductController::class, 'index'])
     ->middleware('role:admin,owner');
+
+
+// require __DIR__.'/auth.php';
+// use App\Http\Controllers\Barang;    
+
+    route::group(['prefix' => 'admin'],function(){//cara mengaksesnya http://localhost:8000/admin/langsung
+        route::get('/langsung', function(){
+          echo "ini tampilan dari function routes langsung";});
+    });
+
+    route::get('/group_route', function(){
+        //cara mengaksesnya http://localhost:8000/admin/group_route_satu
+        echo "ini tampilan dari group route";
+    });
+
+    Route::get('/route_count/{id}', [productController::class, 'show']);
+
+    //akses produk controler 
+    route::get('/produk', [productController::class, 'index']);
+    // $nama = "Produk A";
+    // return view('produk', compact('nama'));
+
+
+// UTS
+use App\Http\Controllers\UtsController;
+
+Route::prefix('uts')->group(function () {
+    Route::get('/index', [UtsController::class, 'index']);
+    Route::get('/database', [UtsController::class, 'database']);
+});
+
+// Route::get('/urlUts', [UtsController::class, 'urlUts']);
+
+
+
+
+

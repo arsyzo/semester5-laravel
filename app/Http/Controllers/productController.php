@@ -29,10 +29,28 @@ class productController extends Controller
         return redirect('/products')->with('success', 'Produk berhasil ditambahkan!');
     }
 
-    public function index($angka)
+    // public function index($angka)
+    // {
+    //     $hasil = $angka + 10; // bebas, kamu bisa ganti 10 dengan angka lain
+    //     return view('products.result', compact('hasil'));
+    // }
+
+
+    public function show(string $id)
     {
-        $hasil = $angka + 10; // bebas, kamu bisa ganti 10 dengan angka lain
-        return view('products.result', compact('hasil'));
+        return view('barang',[
+            'isi_data' => $id
+        ]);
+        
     }
 
+    public function index()
+    {
+        $nama = "mahasiswa UNSIKA";
+        return view('produk', data:['nama' => $nama, 'alertmessage' => 'selamat belajar blade', 'alerttype' => 'success']);
+    }
+
+    
 }
+
+
