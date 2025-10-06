@@ -90,6 +90,7 @@ use App\Http\Controllers\UtsController;
 
 Route::prefix('uts')->group(function () {
     Route::get('/index', [UtsController::class, 'index']);
+    Route::get('/uts/web', [UtsController::class, 'web']);
     Route::get('/database', [UtsController::class, 'database']);
 });
 

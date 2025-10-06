@@ -18,6 +18,12 @@ class UtsController extends Controller
     {
         return view('uts.database');
     }
+    
+    public function web()
+    {
+        return view('uts.web');
+    }
+
 
     // public function urlUts()
     // {

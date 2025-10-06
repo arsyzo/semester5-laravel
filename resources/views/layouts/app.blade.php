@@ -28,9 +28,10 @@
 </head>
 <body>
     @include('layouts.header')
-    <main>
+    <div class="content">
         @yield('content')
-    </main>
+    </div>
+
     @include('layouts.footer')
 </body>
 </html>
