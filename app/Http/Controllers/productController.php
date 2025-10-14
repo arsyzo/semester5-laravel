@@ -8,33 +8,43 @@ use App\Models\category;
 class productController extends Controller
 {
     // Tampilkan form input produk
-    public function create()
-    {
-        $categories = category::all(); // Untuk dropdown kategori
-        return view('products.create', compact('categories'));
-    }
+    // public function create()
+    // {
+    //     $categories = category::all(); // Untuk dropdown kategori
+    //     return view('products.create', compact('categories'));
+    // }
 
     // Simpan data produk ke database
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'name' => 'required',
+    //         'price' => 'required|numeric',
+    //         'description' => 'nullable',
+    //         'category_id' => 'required|exists:categories,id',
+    //     ]);
+
+    //     product::create($request->all());
+
+    //     return redirect('/products')->with('success', 'Produk berhasil ditambahkan!');
+    // }
+
+    
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'price' => 'required|numeric',
-            'description' => 'nullable',
-            'category_id' => 'required|exists:categories,id',
+            'product_name' => 'required|string|max:255',
+            'unit' => 'required|string|max:50',
+            'type' => 'required|string|max:50',
+            'information' => 'nullable|string',
+            'qty' => 'required|integer',
+            'producer' => 'required|string|max:255',
         ]);
 
-        product::create($request->all());
+        product::create($validasi_);
 
-        return redirect('/products')->with('success', 'Produk berhasil ditambahkan!');
+        return redirect()->back()->with('success', 'Produk berhasil ditambahkan!');
     }
-
-    // public function index($angka)
-    // {
-    //     $hasil = $angka + 10; // bebas, kamu bisa ganti 10 dengan angka lain
-    //     return view('products.result', compact('hasil'));
-    // }
-
 
     public function show(string $id)
     {
@@ -50,7 +60,23 @@ class productController extends Controller
         return view('produk', data:['nama' => $nama, 'alertmessage' => 'selamat belajar blade', 'alerttype' => 'success']);
     }
 
+    public function create()
+    {
+        return view("master-data.product-master.create-product");
+    }
+
     
+    
+
+
+
 }
+
+
+
+
+
+
+
 
 

@@ -45,6 +45,14 @@ use App\Http\Controllers\productController;
 Route::get('/products/create', [productController::class, 'create']);
 Route::post('/products', [productController::class, 'store']);
 
+Route::get('/product/create', [ProductController::class, 'create'])->name('product-create');
+Route::post('/product', [ProductController::class, 'store'])->name('product-store');
+
+Route::get('/dashboard', function () {
+    return redirect('/products');
+});
+
+
 //percobaan
 
 
@@ -88,13 +96,13 @@ Route::get('/angka/{angka}', [ProductController::class, 'index'])
 // UTS
 use App\Http\Controllers\UtsController;
 
-Route::prefix('uts')->group(function () {
-    Route::get('/index', [UtsController::class, 'index']);
-    Route::get('/uts/web', [UtsController::class, 'web']);
-    Route::get('/database', [UtsController::class, 'database']);
-});
+// Route::prefix('uts')->group(function () {
+//     Route::get('/index', [UtsController::class, 'index']);
+//     Route::get('/uts/web', [UtsController::class, 'web']);
+//     Route::get('/database', [UtsController::class, 'database']);
+// });
 
-// Route::get('/urlUts', [UtsController::class, 'urlUts']);
+
 
 
 

@@ -14,5 +14,7 @@
                 </div>
             </div>
         </div>
+        <a href="{{ url('/products') }}" class="btn btn-primary">
     </div>
 </x-app-layout>
+
