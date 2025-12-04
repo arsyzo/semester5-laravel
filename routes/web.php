@@ -1,18 +1,25 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\UtsController;
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
+// ============================================
+// BASIC ROUTES
+// ============================================
 Route::get('/wellcome', function () {
     return view('wellcome');
 });
 
+// ============================================
+// AUTHENTICATION ROUTES
+// ============================================
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return redirect('/products');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -21,90 +28,67 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
-
-
-
-use App\Models\product;
-
-Route::get('/products', function () {
-    $products = product::with('category')->get();
-    return view('products.index', compact('products'));
-});
-
-use App\Models\category;
-
-Route::get('/categories', function () {
-    $categories = category::all();
-    return view('categories.index', compact('categories'));
-});
-
-//role untuk middleware 
-use App\Http\Controllers\productController;
-
-Route::get('/products/create', [productController::class, 'create']);
-Route::post('/products', [productController::class, 'store']);
-
-Route::get('/product/create', [ProductController::class, 'create'])->name('product-create');
-Route::post('/product', [ProductController::class, 'store'])->name('product-store');
-
-Route::get('/dashboard', function () {
-    return redirect('/products');
-});
-
-
-//percobaan
-
-
-Route::get('dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth','RoleCheck:admin'])->name('dashboard');  
-
-Route::get('/rahasia', function (): string{
+// ============================================
+// ROLE MIDDLEWARE ROUTES
+// ============================================
+Route::get('/rahasia', function (): string {
     return 'ini path rahasia';
 })->middleware(['auth', 'RoleCheck:admin'])->name('rahasia');
-
-require __DIR__.'/auth.php';
-
-// use App\Http\Controllers\ProductController;
 
 Route::get('/angka/{angka}', [ProductController::class, 'index'])
     ->middleware('role:admin,owner');
 
+// ============================================
+// PRODUCT ROUTES (CRUD)
+// ============================================
+Route::get('/products', [ProductController::class, 'index'])->name('product-index');
+Route::get('/products/create', [ProductController::class, 'create'])->name('product-create');
+Route::post('/products', [ProductController::class, 'store'])->name('product-store');
+Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('product-edit');
+Route::put('/products/{id}', [ProductController::class, 'update'])->name('product-update');
+Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('product-destroy');
 
-// require __DIR__.'/auth.php';
-// use App\Http\Controllers\Barang;    
+// Export Excel
+Route::get('/products/export-excel', [ProductController::class, 'exportExcel'])->name('products.exportExcel');
 
-    route::group(['prefix' => 'admin'],function(){//cara mengaksesnya http://localhost:8000/admin/langsung
-        route::get('/langsung', function(){
-          echo "ini tampilan dari function routes langsung";});
+// ============================================
+// CATEGORY ROUTES
+// ============================================
+Route::get('/categories', function () {
+    $categories = Category::all();
+    return view('categories.index', compact('categories'));
+});
+
+// ============================================
+// GROUP ROUTES (Admin)
+// ============================================
+Route::group(['prefix' => 'admin'], function() {
+    Route::get('/langsung', function() {
+        echo "ini tampilan dari function routes langsung";
     });
+});
 
-    route::get('/group_route', function(){
-        //cara mengaksesnya http://localhost:8000/admin/group_route_satu
-        echo "ini tampilan dari group route";
-    });
+Route::get('/group_route', function() {
+    echo "ini tampilan dari group route";
+});
 
-    Route::get('/route_count/{id}', [productController::class, 'show']);
+Route::get('/route_count/{id}', [ProductController::class, 'show']);
 
-    //akses produk controler 
-    route::get('/produk', [productController::class, 'index']);
-    // $nama = "Produk A";
-    // return view('produk', compact('nama'));
+// ============================================
+// UTS ROUTES
+// ============================================
+Route::prefix('uts')->group(function () {
+    Route::get('/index', [UtsController::class, 'index']);
+    Route::get('/web', [UtsController::class, 'web']);
+    Route::get('/database', [UtsController::class, 'database']);
+});
 
+// ============================================
+// PRAKTIKUM 5 - PRODUK ALERT (TUGAS BARU)
+// ============================================
+Route::get('/produk/{angka}', [ProdukController::class, 'index'])->name('produk');
 
-// UTS
-use App\Http\Controllers\UtsController;
-
-// Route::prefix('uts')->group(function () {
-//     Route::get('/index', [UtsController::class, 'index']);
-//     Route::get('/uts/web', [UtsController::class, 'web']);
-//     Route::get('/database', [UtsController::class, 'database']);
-// });
-
-
-
-
-
-
-
+// ============================================
+// AUTH ROUTES
+// ============================================
+require __DIR__.'/auth.php';
